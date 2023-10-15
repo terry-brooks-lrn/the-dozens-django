@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "the-dozens-django"
+version = "0.1.0"
+description = "Conversion of the Dozens Roast API from Flask RestX to Django DRF framework"
+authors = ["Terry Brooks"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^4.2.6"
+markdown = "^3.5"
+djangorestframework = "^3.14.0"
+django-filter = "^23.3"
+python-dotenv = "^1.0.0"
+loguru = "^0.7.2"
+django-debug-toolbar = "^4.2.0"
+logtail-python = "^0.2.7"
+psycopg2-binary = "^2.9.9"
+redis = {extras = ["hiredis"], version = "^5.0.1"}
+
+
+[tool.poetry.group.test.dependencies]
+pytest-django = "^4.5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "test.settings"
+
+[tool.djlint]
+format_css=true
+format_js=true
+ignore="H021,T001, H008"
+
+[tool.djlint.css]
+indent_size=5
+
+[tool.djlint.js]
+indent_size=5
