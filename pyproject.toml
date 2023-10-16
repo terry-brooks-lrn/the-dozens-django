@@ -18,10 +18,15 @@ django-debug-toolbar = "^4.2.0"
 logtail-python = "^0.2.7"
 psycopg2-binary = "^2.9.9"
 redis = {extras = ["hiredis"], version = "^5.0.1"}
+django-mailer = "^2.3"
 
 
 [tool.poetry.group.test.dependencies]
 pytest-django = "^4.5.2"
+
+
+[tool.poetry.group.Dev.dependencies]
+pre-commit = "^3.5.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -33,7 +38,7 @@ DJANGO_SETTINGS_MODULE = "test.settings"
 [tool.djlint]
 format_css=true
 format_js=true
-ignore="H021,T001, H008"
+ignore="H021,T001, H008, H030, H031"
 
 [tool.djlint.css]
 indent_size=5
