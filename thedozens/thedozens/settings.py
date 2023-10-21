@@ -12,8 +12,10 @@ import os
 from datetime import datetime
 from django.core.mail import send_mail
 from datetime import datetime
+from loguru import logger
+from logtail import LogtailHandler
 
-load_dotenv()
+load_dotenv(override=True)
 GLOBAL_NOW = datetime.now()
 
 
@@ -35,8 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third-Party Apps
     "rest_framework",
+    "django_filters",
     "debug_toolbar",
-    "mailer",
+    "graphene_django",
+    "rest_framework_swagger",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # Project Apps
     "API",
 ]
@@ -63,12 +69,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "NAME": os.getenv("PG_DATABASE_NAME"),
+        "USER": os.getenv("PG_DATABASE_USER"),
+        "PASSWORD": os.getenv("PG_DATABASE_PASSWORD"),
         "HOST": os.getenv("PG_DATABASE_HOST"),
-        "PORT": os.getenv("DB_PORT"),
-        "OPTIONS": {"ssl": True},
+        "PORT": 5432,
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 
@@ -101,11 +107,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # SECTION - Static files & Templatea
-
+template_dir = os.path.join(BASE_DIR, "templates")
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [template_dir],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -136,6 +142,9 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
     ],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ],
 }
 
 #!SECTION
@@ -150,4 +159,18 @@ EMAIL_PORT = os.getenv("EMAIL_TSL_PORT")
 EMAIL_HOST_USER = os.getenv("NOTIFICATION_SENDER_EMAIL")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_ACCT_PASSWORD")
 MAILER_EMPTY_QUEUE_SLEEP = os.getenv("MAILER_EMPTY_QUEUE_SLEEP")
+# !SECTION
+
+#  SECTION - GraphQL Settings (Graphene-Django)
+
+GRAPHENE = {
+    "SCHEMA": "schema",
+}
+
+# !SECTION
+
+# SECTION - Form Rendering Settings (Crispy Forms)
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 # !SECTION

@@ -2,7 +2,6 @@ VENV := env
 BIN := $(VENV)/bin
 PYTHON := $(BIN)/python
 SHELL := /bin/bash
-
 include .env
 
 .PHONY: help

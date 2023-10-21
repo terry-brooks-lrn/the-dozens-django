@@ -1,0 +1,263 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>W
+  <meta name="keywords" content="API, Joke, Entertainment, Yo Mama Jokes, The Dozens "/>
+  <title>The Dozens - The Yo Mama Roast API</title>
+  <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/Terry-BrooksJr/MindHealthCDN@94065f369600b5ac3fd17c56da7800c83bf356dd/images/yoyoo_400x400.jpg"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.4/dist/css/uikit.min.css" />
+
+  <script src="https://kit.fontawesome.com/58e27c88da.js" crossorigin="anonymous"></script>
+  <style>
+    @font-face {
+        font-family: YoMamaHeader;
+        src: url(https://cdn.jsdelivr.net/gh/Terry-BrooksJr/MindHealthCDN@c6715b28123debb772de65c5c4b2d41ca63e775e/fonts/RubikVinyl-Regular.ttf);
+      }
+
+      @font-face {
+        font-family: YoMamaBody;
+        src: url(https://cdn.jsdelivr.net/gh/Terry-BrooksJr/MindHealthCDN@1a2c14865a818cec1a0982dc0197d56106eb95a4/fonts/JuliusSansOne-Regular.ttf);
+      }
+      body {
+       background-image: url("https://cdn.jsdelivr.net/gh/Terry-BrooksJr/MindHealthCDN@5781529605d5e009fd1f740a25f5a105a35e450e/images/background%20(1).svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: "YoMamaBody";
+      }
+      main{
+        height: 780px;
+        width: 100%;
+      }
+    #copy-right{
+        position: fixed;
+        bottom: 225px;
+        left: 15px;
+    }
+    #video-sub-copy{
+        position: fixed;
+        bottom: 190px;
+        left: 15px;
+    }
+    #dozens-image{
+        position: fixed;
+        left: -205px;
+    }
+      #yo-mama-brand {
+        height: 100px;
+        width: auto;
+        margin-left 230px;
+        float: left;
+      }
+
+    #about-video {
+        position: fixed;
+        left: 25px;
+        bottom: 275px;
+    }
+
+      #yo-mama-dropdown{
+        outline:0;
+        border:0;
+        background-color: transparent;
+      }
+
+
+
+      /* Modify the background color */
+      .navbar-main nav {
+          background-color: purple;
+      }
+      #joke{
+        color: white;
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        flex-direction: row;
+      }
+
+      .btn-primary {
+        background-color: purple !important
+      }
+      .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+          background-color: #BEDA00 !important
+      }
+      #dozens-image {
+        margin-left: 130px;
+      }
+
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: purple;
+        color: white;
+        text-align: center
+
+      }
+      #bb-py-logo {
+        height: 5%;
+        width: 5%;
+      }
+
+  </style>
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+
+
+
+
+
+
+
+    <nav uk-dropnav>
+      <ul class="uk-subnav navbar-main">
+          <li class="uk-active"><a href="#">Active</a></li>
+          <li><a href="https://www.brooksjr.com" target="_blank">About the Developer</a></li>
+          <li>
+              <a href>The API <span uk-drop-parent-icon></span></a>
+              <div class="uk-dropdown">
+                  <ul class="uk-nav uk-dropdown-nav">
+                      <li><a href="#">Register to Contribute</a></li>
+                      <li><a id="reportAJokeTrigger" data-bs-toggle="modal" data-bs-target="#reportJokeModal">Report a Joke To Be Reviewed</a></li>
+                  </ul>
+              </div>
+          </li>
+
+          <li><a href="#">The History of Yo' Mama Jokes</a></li>
+      </ul>
+    </nav>
+
+  <main>
+    <div class="row" id="body-img-row">
+        <div class="col-4">
+      <img id="dozens-image" src="https://cdn.jsdelivr.net/gh/Terry-BrooksJr/MindHealthCDN@dab0dbeb8cccd8a35b669fcdd5f16443a7041240/images/Dozen-Word-brand.png" alt="body-typograpy"/>
+    </div>
+</div>
+<div class="row">
+      <div class="col-6" id="video-row">
+        <video id="about-video" width="530" height="auto" src="https://cdn.jsdelivr.net/gh/Terry-BrooksJr/MindHealthCDN@52e60ba4815d8385dda1160487cf1761b3f166ca/images/black-ish%EA%9E%89%20Dre%20Explains%20%23TheDozens.mp4" class="object-fit-fill" controls></video>
+      </div>
+    </div>
+    <div class="row">
+        <div class="video-sub-copy">
+      <p>Clip from ABC's Hit Show <strong>black</strong>·<em>ish</em></p>
+      </div>
+      <div id="copy-right">
+        <div class="copyright-text">
+          <p><i class="fa fa-copyright"></i> American Broadcasting Company (ABC)</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <marquee>
+      Over 400 Side-Splitting Yo Mama Jokes · 10 Catagories to Choose From including Fat, Poor, Ugly and Dumb · Ability to filter out jokes based on explicitiy classification
+    </marquee>
+  </footer>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src='https://kit.fontawesome.com/58e27c88da.js'></script>
+  <!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.17.4/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.17.4/dist/js/uikit-icons.min.js"></script>
+  <script>
+    // Inital Joke On Load
+$.getJSON("https://the-dozens.onrender.com/insult", response => {
+    $("#joke").text(
+      Object.values(response)[0]
+    );
+  });
+  // On-Demand Joke Load
+  const place_joke = () => {
+    $.getJSON("https://the-dozens.onrender.com/insult", response => {
+    $("#joke").text(
+      Object.values(response)[0]
+    );
+  });
+  };
+  const reportModalTrigger = document.getElementById("reportAJokeTrigger")
+  const reportAJokeModal = document.getElementById("reportJokeModal")
+  reportModalTrigger.addEventListener("click", )
+  // Octokit.js
+// https://github.com/octokit/core.js#readme
+const octokit = new Octokit({
+  auth: {{ github_access_token|safe }}
+})
+
+await octokit.request('POST /repos/{owner}/{repo}/issues', {
+  owner: 'OWNER',
+  repo: 'REPO',
+  title: 'Found a bug',
+  body: 'I\'m having a problem with this.',
+  assignees: [
+    'octocat'
+  ],
+  milestone: 1,
+  labels: [
+    'bug'
+  ],
+  headers: {
+    'X-GitHub-Api-Version': '2022-11-28'
+  }
+})
+  </script>
+  <!-- Modal -->
+  <div class="modal fade" id="reportJokeModal" tabindex="-1" role="dialog" aria-labelledby="reportJokeModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reportJokeModalTitle">Report A Joke</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Overview</h3>
+          <p>The Dozen's API intends to serve as a humorous, joyful piece of African-American culture where, as a community, good-hearted jokes are shared and enjoyed. To this end, please submit a joke for review if you feel its presence is a disservice to that end.</p>
+          <h3>Review Process</h3>
+          <p>Depending on the reason for the review process, a contributor to the API will review the submitted joke  within seven working days.</p>
+            <br/>
+
+          <p>In the event of any submission reason other than 'Inappropriate,' a single contributor will review the
+            joke's content
+            and comments provided in this submission and take appropriate action. <strong>Appropriate actions include
+              but are not2
+              limited to the following: </strong></p>
+          <ol>
+            <li>Joke Reclassification - Changing the Joke from explicit or inexplicit</li>
+            <li>Joke Recatagorizion - Changing the Catagory of the Joke to a more accurate category </li>
+            <li>Joke Removal - Complete removal from the Joke Database</li>
+          </ol>
+          {% crispy ReportForm %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

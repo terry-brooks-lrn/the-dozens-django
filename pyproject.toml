@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
 django = "^4.2.6"
 markdown = "^3.5"
 djangorestframework = "^3.14.0"
@@ -19,6 +19,11 @@ logtail-python = "^0.2.7"
 psycopg2-binary = "^2.9.9"
 redis = {extras = ["hiredis"], version = "^5.0.1"}
 django-mailer = "^2.3"
+graphene-django = "^3.1.5"
+uritemplate = "^4.1.1"
+django-rest-swagger = "^2.2.0"
+django-crispy-forms = "^2.1"
+crispy-bootstrap5 = "^0.7"
 
 
 [tool.poetry.group.test.dependencies]
@@ -27,6 +32,14 @@ pytest-django = "^4.5.2"
 
 [tool.poetry.group.Dev.dependencies]
 pre-commit = "^3.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+pip = "^23.3"
+install = "^1.3.5"
+isort = "^5.12.0"
+mypy = "^1.6.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -38,7 +51,7 @@ DJANGO_SETTINGS_MODULE = "test.settings"
 [tool.djlint]
 format_css=true
 format_js=true
-ignore="H021,T001, H008, H030, H031"
+ignore="H021,T001,H008,H030,H031,H006"
 
 [tool.djlint.css]
 indent_size=5
