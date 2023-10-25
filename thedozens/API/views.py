@@ -1,45 +1,58 @@
 # -*- coding: utf-8 -*-
 from rest_framework.generics import (
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     RetrieveAPIView,
+    ListAPIView,
 )
 from API.filters import InsultFilter
 from API.serializers import InsultSerializer, InsultsCategorySerializer
 from django_filters import rest_framework as filters
-from rest_framework.exceptions import NotFound
-from rest_framework import status
 from API.models import Insult
 from rest_framework.response import Response
+from rest_framework import status
 import random
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.permissions import AllowAny
 
-# Create your views here.
+RANDOM_QS = Insult.objects.filter(status="A").values("id", "content").cache(ops=["get"])
 
 
-class InsultsView(
-    ListCreateAPIView,
-):
+@api_view(["GET"])
+@permission_classes([AllowAny])
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def randomUnfilteredInsult(request):
+    queryset = list(RANDOM_QS)
+    return Response(data=random.choice(seq=queryset), status=status.HTTP_200_OK)
+
+
+class InsultsView(ListAPIView):
     queryset = Insult.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = InsultFilter
+    lookup_field = "category"
     serializer_class = InsultsCategorySerializer
 
-    def get_queryset(self, category="fat"):
-        insults = Insult.objects.filter(status="A").filter(category=category)
-        return insults
 
-
-class InsultSingleItem(RetrieveUpdateDestroyAPIView):
+class InsultSingleItem(RetrieveAPIView):
     queryset = Insult.objects.all()
+    lookup_field = "id"
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = InsultFilter
     serializer_class = InsultSerializer
 
-    def get_object(self, pk):
-        try:
-            Response(data=Insult.objects.get(id=pk), status=status.HTTP_200_OK)
-        except NotFound:
-            Response(
-                data={"error": "No Item with that ID exisits in the API"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+
+class MyInsultsView(RetrieveUpdateDestroyAPIView):
+    def get_queryset(self):
+        """
+        This view returns a list of all insults created by the currently
+        authenticated user.
+
+        Returns empty list if user Anonymous
+        """
+        user = self.request.user
+
+        if not user.is_anonymous:
+            return Insult.objects.filter(added_by=user)
+
+        return Insult.objects.none()

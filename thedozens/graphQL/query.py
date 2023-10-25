@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-import graphene
-from API.filters import InsultFilter
+from graphene import ObjectType, String, ID, Boolean, Field, List
 from API.models import Insult
-from graphene import relay
 from graphene_django import DjangoObjectType
-from graphene_django.filter import DjangoFilterConnectionField
+from API.filters import InsultFilter
+
+# Create your views here.
 
 
 class InsultType(DjangoObjectType):
     class Meta:
+        name = "Insult"
+        description = "The GraphQL Object Type for Insult Catagory"
         model = Insult
         field = (
             "content",
@@ -20,15 +22,14 @@ class InsultType(DjangoObjectType):
             "status",
         )
         filterset_class = InsultFilter
-        interfaces = (relay.Node,)
 
 
-class Query(graphene.ObjectType):
-    insults = graphene.List(InsultType)
-    insult_by_category = graphene.Field(InsultType, category=graphene.String())
-    insults_by_status = graphene.Field(InsultType, status=graphene.String())
-    insults_by_classification = graphene.Field(InsultType, explicit=graphene.Boolean())
-    insult_by_id = graphene.Field(InsultType, id=graphene.ID())
+class Query(ObjectType):
+    random_insult = Field(InsultType)
+    insult_by_category = List(InsultType, category=String())
+    insults_by_status = Field(InsultType, status=String())
+    insults_by_classification = Field(InsultType, explicit=Boolean())
+    insult_by_id = Field(InsultType, id=ID())
 
     def resolve_insults(root, info, **kwargs):
         return Insult.objects.fiter(status="A")
@@ -44,14 +45,3 @@ class Query(graphene.ObjectType):
 
     def resolve_insult_by_id(root, info, ID):
         return Insult.objects.get(id=ID)
-
-
-class Mutation(graphene.ObjectType):
-    pass
-
-
-class Subscription(graphene.ObjectType):
-    pass
-
-
-schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)

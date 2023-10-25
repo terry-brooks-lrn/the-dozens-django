@@ -8,14 +8,14 @@ from django.utils.translation import gettext_lazy as _
 from logtail import LogtailHandler
 from loguru import logger
 import datetime
+from cacheops import cache
 
 NOW = datetime.datetime.now()
 
-PRIMARY_LOG_FILE = os.path.join(
-    settings.BASE_DIR, "thedozens", "logs", "primary_ops.log"
-)
-CRITICAL_LOG_FILE = os.path.join(settings.BASE_DIR, "thedozens", "logs", "fatal.log")
-DEBUG_LOG_FILE = os.path.join(settings.BASE_DIR, "thedozens", "logs", "utility.log")
+
+PRIMARY_LOG_FILE = os.path.join(settings.BASE_DIR, "standup", "logs", "primary_ops.log")
+CRITICAL_LOG_FILE = os.path.join(settings.BASE_DIR, "standup", "logs", "fatal.log")
+DEBUG_LOG_FILE = os.path.join(settings.BASE_DIR, "standup", "logs", "utility.log")
 LOGTAIL_HANDLER = LogtailHandler(source_token=os.getenv("LOGTAIL_API_KEY"))
 
 logger.add(DEBUG_LOG_FILE, diagnose=True, catch=True, backtrace=True, level="DEBUG")
@@ -29,6 +29,7 @@ class Insult(models.Model):
         ordering = ["explicit", "category"]
         verbose_name = "Insult/Joke"
         verbose_name_plural = "Insults/Jokes"
+        managed = True
 
     class CATEGORY(models.TextChoices):
         POOR = "P", _("Poor")
@@ -185,7 +186,7 @@ class InsultReview(models.Model):
         SAME_CATAGORY = "SJC", _("Completed - No New Catagory Assigned")
         REMOVED = "X", _("Completed - Joke Removed")
 
-    insult_id = models.ForeignKey(Insult, on_delete=models.PROTECT)
+    insult_id = models.ForeignKey(Insult, on_delete=models.CASCADE)
     anonymous = models.BooleanField(default=False)
     reporter_first_name = models.CharField(max_length=80, null=True, blank=True)
     reporter_last_name = models.CharField(max_length=80, null=True, blank=True)
